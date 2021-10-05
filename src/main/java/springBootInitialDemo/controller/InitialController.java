@@ -4,13 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.example.restservice.Hello;
+
+import springBootInitialDemo.HelloGraddle;
 import springBootInitialDemo.dto.UserResponseDto;
 import springBootInitialDemo.service.IUserService;
 
 @RestController
 @RequestMapping("/v1")
 public class InitialController {
-
+	private static final String template= "Hello, %s!";
     private final IUserService userService;
 
     @Autowired
@@ -22,6 +26,14 @@ public class InitialController {
     public String helloGradle() {
         return "Hello Gradle!";
     }
+    
+    
+    @GetMapping("/hellograddle")
+    public HelloGraddle hiGraddle(@RequestParam(value="name", defaultValue="World")String name) {
+		return new HelloGraddle(String.format(template, name));
+	}
+    	
+    
 
     //@PutMapping(value ="", consumes = {"application/json"})
     @GetMapping("/user/{uuid}")
